@@ -1,0 +1,66 @@
+package moscow.mytheria.systems.commands.commands;
+
+import java.util.List;
+import moscow.mytheria.Mytheria;
+import moscow.mytheria.systems.commands.Command;
+import moscow.mytheria.systems.commands.CommandBuilder;
+import moscow.mytheria.systems.commands.ParameterBuilder;
+import moscow.mytheria.systems.commands.CommandContext;
+import moscow.mytheria.systems.commands.ValidationResult;
+import moscow.mytheria.systems.friends.FriendManager;
+import moscow.mytheria.systems.localization.Localizator;
+import moscow.mytheria.utility.game.MessageUtility;
+import net.minecraft.text.Text;
+import ru.kotopushka.compiler.sdk.annotations.Compile;
+
+public class FriendCommand {
+   @Compile
+   public Command command() {
+      return CommandBuilder.begin(
+            "friend",
+            b -> b.aliases("friends")
+               .desc("commands.friends.description")
+               .param("action", (ParameterBuilder<String> p) -> p.literal("add", "remove", "del", "delete", "clear", "list"))
+               .param("id", (ParameterBuilder<String> p) -> p.optional().validator(ValidationResult::ok))
+               .handler(this::handle)
+         )
+         .build();
+   }
+
+   @Compile
+   private void handle(CommandContext ctx) {
+      String action = (String)ctx.arguments().get(0);
+      String id = (String)ctx.arguments().get(1);
+      FriendManager fm = Mytheria.getInstance().getFriendManager();
+      String var5 = action.toLowerCase();
+      switch (var5) {
+         case "add":
+            fm.add(id);
+            break;
+         case "remove":
+         case "del":
+         case "delete":
+            fm.remove(id);
+            break;
+         case "clear":
+            fm.clear();
+            break;
+         case "list":
+            this.printList();
+      }
+   }
+
+   @Compile
+   private void printList() {
+      List<String> friends = Mytheria.getInstance().getFriendManager().listFriends();
+      if (friends.isEmpty()) {
+         MessageUtility.info(Text.of(Localizator.translate("commands.friends.empty")));
+      } else {
+         MessageUtility.info(Text.of(Localizator.translate("commands.friends.list")));
+
+         for (int i = 0; i < friends.size(); i++) {
+            MessageUtility.info(Text.of("[" + (i + 1) + "] " + friends.get(i)));
+         }
+      }
+   }
+}

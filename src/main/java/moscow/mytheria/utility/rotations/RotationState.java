@@ -1,0 +1,7 @@
+package moscow.mytheria.utility.rotations;
+
+public enum RotationState {
+   IDLE,
+   ROTATING,
+   ROTATING_BACK;
+}

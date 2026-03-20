@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "mytheria",
+  "version": "2.0.6",
+  "name": "Mytheria",
+  "description": "Вспомогательный мод для комфортной игры",
+  "authors": [
+    "Nesquik",
+    "Sinlixx"
+  ],
+  "contact": {
+    "homepage": "https://mytheria.moscow"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/mytheria/icon.png",
+  "environment": "client",
+  "entrypoints": {},
+  "mixins": [
+    "mytheria.mixins.json"
+  ],
+  "accessWidener": "mytheria.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
