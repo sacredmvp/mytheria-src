@@ -730,3 +730,4 @@ modules.settings.aimassist.multipoint=Мультипоинт
 modules.settings.aimassist.multipoint_count=Количество точек
 modules.settings.aimassist.break_on_kill=Пауза после убийства
 modules.settings.aimassist.break_delay=Задержка паузы
+modules.settings.aimassist.attackinvisible=Атака невидимых

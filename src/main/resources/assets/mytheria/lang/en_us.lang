@@ -626,3 +626,4 @@ modules.settings.aimassist.multipoint=Multipoint
 modules.settings.aimassist.multipoint_count=Point Count
 modules.settings.aimassist.break_on_kill=Break On Kill
 modules.settings.aimassist.break_delay=Break Delay
+modules.settings.aimassist.attackinvisible=Attack Invisible

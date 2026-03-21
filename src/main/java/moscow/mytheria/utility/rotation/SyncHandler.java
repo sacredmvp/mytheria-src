@@ -11,8 +11,6 @@ public class SyncHandler {
     
     public float lastYaw = 0;
     public float lastPitch = 0;
-    public float acceleration = 0;
-    public boolean isBack = false;
     
     public void applyRotation(LivingEntity target) {
         if (mc.player == null || target == null) return;
@@ -25,57 +23,15 @@ public class SyncHandler {
         float targetYaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(vec.z, vec.x)) - 90.0);
         float targetPitch = (float) (-Math.toDegrees(Math.atan2(vec.y, Math.sqrt(vec.x * vec.x + vec.z * vec.z))));
         
-        if (mc.player.isGliding()) {
-            if (!isBack) {
-                acceleration += 0.005F;
-                if (acceleration >= 0.13F) {
-                    isBack = true;
-                }
-            } else {
-                if (acceleration >= -0.02F) {
-                    acceleration -= 0.005F;
-                }
-                if (acceleration <= -0.02F) {
-                    isBack = false;
-                }
-            }
-        } else {
-            Vec3d lookVec = mc.player.getRotationVector();
-            boolean canSeeTarget = rayTrace(lookVec, 1488.0, box);
-            
-            if (!canSeeTarget) {
-                acceleration += 0.0015F;
-            } else if (acceleration > 0.0F) {
-                acceleration -= 0.01F;
-            }
-        }
-        
-        float deltaYaw = MathHelper.wrapDegrees(targetYaw - lastYaw);
-        float deltaPitch = targetPitch - lastPitch;
-        
-        float newYaw = lastYaw + deltaYaw;
-        float newPitch = lastPitch + deltaPitch;
-        
         float gcd = getGCD();
-        newYaw -= (newYaw - lastYaw) % gcd;
-        newPitch -= (newPitch - lastPitch) % gcd;
+        targetYaw -= (targetYaw - lastYaw) % gcd;
+        targetPitch -= (targetPitch - lastPitch) % gcd;
         
-        float cameraYaw = mc.gameRenderer.getCamera().getYaw();
-        float cameraPitch = mc.gameRenderer.getCamera().getPitch();
+        lastYaw = targetYaw;
+        lastPitch = targetPitch;
         
-        float deltaYaw2 = MathHelper.wrapDegrees(cameraYaw - lastYaw);
-        float deltaPitch2 = cameraPitch - lastPitch;
-        
-        if (mc.options.getPerspective().isFirstPerson() == false && mc.options.getPerspective().isFrontView()) {
-            deltaYaw2 = MathHelper.wrapDegrees(cameraYaw - 180.0F - lastYaw);
-            deltaPitch2 = -cameraPitch - lastPitch;
-        }
-        
-        lastYaw = newYaw;
-        lastPitch = newPitch;
-        
-        mc.player.setYaw(newYaw);
-        mc.player.setPitch(newPitch);
+        mc.player.setYaw(targetYaw);
+        mc.player.setPitch(targetPitch);
     }
     
     public void reset() {
@@ -83,14 +39,6 @@ public class SyncHandler {
             lastYaw = mc.player.getYaw();
             lastPitch = mc.player.getPitch();
         }
-        acceleration = 0.15F;
-        isBack = false;
-    }
-    
-    private boolean rayTrace(Vec3d direction, double distance, Box targetBox) {
-        Vec3d start = mc.player.getEyePos();
-        Vec3d end = start.add(direction.multiply(distance));
-        return targetBox.raycast(start, end).isPresent();
     }
     
     private float getGCD() {
