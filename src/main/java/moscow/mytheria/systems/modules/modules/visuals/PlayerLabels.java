@@ -70,19 +70,14 @@ public class PlayerLabels extends BaseModule {
    // Цвета
    private final ColorSetting nameColor = new ColorSetting(this, "modules.settings.nametags.name_color")
       .color(new ColorRGBA(255, 255, 255, 255));
-   
    private final ColorSetting friendColor = new ColorSetting(this, "modules.settings.nametags.friend_color")
       .color(new ColorRGBA(85, 255, 85, 255));
-   
    private final ColorSetting healthColor = new ColorSetting(this, "modules.settings.nametags.health_color")
       .color(new ColorRGBA(255, 85, 85, 255));
-   
    private final ColorSetting distanceColor = new ColorSetting(this, "modules.settings.nametags.distance_color")
       .color(new ColorRGBA(170, 170, 170, 255));
-   
    private final ColorSetting backgroundColor = new ColorSetting(this, "modules.settings.nametags.background_color")
       .color(new ColorRGBA(30, 30, 30, 150));
-   
    private final BooleanSetting colorByHealth = new BooleanSetting(this, "modules.settings.nametags.color_by_health").enabled(false);
    
    // Дистанция
@@ -117,7 +112,6 @@ public class PlayerLabels extends BaseModule {
       
       for (Entity entity : mc.world.getEntities()) {
          if (entity == mc.player || !(entity instanceof LivingEntity living)) continue;
-         
          if (!living.isAlive() || living.isDead()) continue;
          
          // Проверка дистанции
@@ -143,7 +137,7 @@ public class PlayerLabels extends BaseModule {
          drawNameTag(ms, living, x, y, z, distance);
       }
    };
-
+   
    /**
     * Рисует нейм тег над сущностью
     */
@@ -176,39 +170,35 @@ public class PlayerLabels extends BaseModule {
       
       ms.pop();
    }
-
+   
    /**
     * Рендер тега игрока
     */
    private void renderPlayerTag(MatrixStack ms, PlayerEntity player, Font font, double distance) {
       boolean isFriend = Mytheria.getInstance().getFriendManager().isFriend(player.getName().getString());
-      
-      String friendPrefix = isFriend ? Formatting.GRAY + "[" + Formatting.GREEN + "F" + Formatting.GRAY + "] " : "";
+      String friendPrefix = isFriend ? "[F] " : "";
       
       float health = player.getHealth() + player.getAbsorptionAmount();
-      String hpText = Formatting.GRAY + " [" + (health < 300 ? Formatting.RED.toString() + (int) health : Formatting.RED + "Unknown") + Formatting.GRAY + "]" + Formatting.RESET;
-      
+      String hpText = " [" + (health < 300 ? (int) health : "Unknown") + "]";
       String name = player.getName().getString();
       
       // Префикс команды (донат)
-      Text prefix = player.getScoreboardTeam() != null ? player.getScoreboardTeam().getPrefix() : Text.literal("");
+      Text prefixText = player.getScoreboardTeam() != null ? player.getScoreboardTeam().getPrefix() : Text.literal("");
       
-      // Вычисляем ширину - все элементы одного размера
-      float textScale = 1.0f; // Единый масштаб для всех элементов
-      float friendWidth = friendPrefix.isEmpty() ? 0 : mc.textRenderer.getWidth(Text.literal(friendPrefix)) * textScale;
-      float prefixWidth = mc.textRenderer.getWidth(prefix) * textScale;
-      float nameHpWidth = mc.textRenderer.getWidth(Text.literal(name + (showHealth.isEnabled() ? hpText : ""))) * textScale;
-      
-      if (showDistance.isEnabled()) {
-         String distText = " [" + String.format("%.1f", distance) + "m]";
-         nameHpWidth += mc.textRenderer.getWidth(Text.literal(distText)) * textScale;
+      // Собираем полный текст
+      String fullText = friendPrefix;
+      if (!prefixText.getString().isEmpty()) {
+         fullText += prefixText.getString();
       }
+      fullText += name;
+      if (showHealth.isEnabled()) fullText += hpText;
+      if (showDistance.isEnabled()) fullText += " [" + String.format("%.1f", distance) + "m]";
       
-      float totalWidth = friendWidth + prefixWidth + nameHpWidth;
-      
+      // Вычисляем ширину
+      float totalWidth = mc.textRenderer.getWidth(fullText);
       float padding = 6.0F;
       float bgWidth = totalWidth + padding * 2;
-      float bgHeight = mc.textRenderer.fontHeight * textScale + padding * 1.5F;
+      float bgHeight = mc.textRenderer.fontHeight + padding * 1.5F;
       
       float x1 = -bgWidth / 2;
       float y1 = -bgHeight / 2;
@@ -241,82 +231,31 @@ public class PlayerLabels extends BaseModule {
          backgroundColor.getColor()
       );
       
-      // Рисуем весь текст в едином масштабе
-      ms.push();
-      ms.translate(x1 + padding, y1 + padding * 0.75f, 0);
-      ms.scale(textScale, textScale, 1.0f);
-      
-      float dx = 0;
-      
-      // Префикс друга
-      if (!friendPrefix.isEmpty()) {
-         mc.textRenderer.draw(
-            Text.literal(friendPrefix), 
-            dx, 
-            0, 
-            -1, 
-            false, 
-            ms.peek().getPositionMatrix(), 
-            mc.getBufferBuilders().getEntityVertexConsumers(), 
-            TextRenderer.TextLayerType.NORMAL, 
-            0, 
-            0xF000F0
-         );
-         dx += friendWidth / textScale;
-      }
-      
-      // Префикс команды (донат) - тот же размер что и все остальное
-      if (!prefix.getString().isEmpty()) {
-         mc.textRenderer.draw(
-            prefix, 
-            dx, 
-            0, 
-            -1, 
-            false, 
-            ms.peek().getPositionMatrix(), 
-            mc.getBufferBuilders().getEntityVertexConsumers(), 
-            TextRenderer.TextLayerType.NORMAL, 
-            0, 
-            0xF000F0
-         );
-         dx += prefixWidth / textScale;
-      }
-      
-      // Имя + здоровье + дистанция
+      // Рисуем текст через обычный TextRenderer
       ColorRGBA nameColorFinal = isFriend ? friendColor.getColor() : nameColor.getColor();
-      String fullText = name;
-      if (showHealth.isEnabled()) fullText += hpText;
-      if (showDistance.isEnabled()) fullText += " [" + String.format("%.1f", distance) + "m]";
       
       mc.textRenderer.draw(
-         Text.literal(fullText), 
-         dx, 
-         0, 
-         nameColorFinal.getRGB(), 
-         false, 
-         ms.peek().getPositionMatrix(), 
-         mc.getBufferBuilders().getEntityVertexConsumers(), 
-         TextRenderer.TextLayerType.NORMAL, 
-         0, 
+         fullText,
+         x1 + padding,
+         y1 + padding * 0.75f,
+         nameColorFinal.getRGB(),
+         false,
+         ms.peek().getPositionMatrix(),
+         mc.getBufferBuilders().getEntityVertexConsumers(),
+         TextRenderer.TextLayerType.NORMAL,
+         0,
          0xF000F0
       );
-      
-      ms.pop();
       
       // Рисуем эффекты
       if (showEffects.isEnabled()) {
          renderEffects(ms, player, font);
       }
       
-      // Рисуем броню
-      if (showArmor.isEnabled()) {
-         ms.push();
-         ms.translate(0, -bgHeight / 2 - 18, 0);
-         renderPlayerItems(ms, player, font);
-         ms.pop();
-      }
+      // Завершаем рендер текста
+      mc.getBufferBuilders().getEntityVertexConsumers().draw();
    }
-
+   
    /**
     * Рендер тега моба
     */
@@ -326,17 +265,18 @@ public class PlayerLabels extends BaseModule {
       
       if (showHealth.isEnabled()) {
          float health = entity.getHealth();
-         hpText = " " + Formatting.RED + String.format("%.1f", health);
+         hpText = " " + String.format("%.1f", health);
       }
       
       if (showDistance.isEnabled()) {
          hpText += " [" + String.format("%.1f", distance) + "m]";
       }
       
-      float nameWidth = font.width(name + hpText);
+      String fullText = name + hpText;
+      float nameWidth = mc.textRenderer.getWidth(fullText);
       float padding = 6.0F;
       float bgWidth = nameWidth + padding * 2;
-      float bgHeight = font.height() + padding * 1.5F;
+      float bgHeight = mc.textRenderer.fontHeight + padding * 1.5F;
       
       float x1 = -bgWidth / 2;
       float y1 = -bgHeight / 2;
@@ -370,125 +310,61 @@ public class PlayerLabels extends BaseModule {
       );
       
       // Текст
-      MsdfRenderer.renderText(
-         font.getFont(),
-         name + hpText,
-         font.getSize(),
+      mc.textRenderer.draw(
+         fullText,
+         x1 + padding,
+         y1 + padding * 0.75f,
          nameColor.getColor().getRGB(),
+         false,
          ms.peek().getPositionMatrix(),
-         -nameWidth / 2,
-         -font.height() / 2 + 1,
-         0.01F
+         mc.getBufferBuilders().getEntityVertexConsumers(),
+         TextRenderer.TextLayerType.NORMAL,
+         0,
+         0xF000F0
       );
+      
+      // Завершаем рендер текста
+      mc.getBufferBuilders().getEntityVertexConsumers().draw();
    }
-
+   
    /**
     * Рендер эффектов
     */
    private void renderEffects(MatrixStack ms, PlayerEntity player, Font font) {
       ms.push();
-      ms.translate(0, font.height() / 2 + 10, 0);
+      ms.translate(0, mc.textRenderer.fontHeight / 2 + 10, 0);
       
       int offsetY = 0;
       for (StatusEffectInstance effect : player.getStatusEffects()) {
          String name = effect.getEffectType().value().getName().getString();
          int lvl = effect.getAmplifier() + 1;
          int sec = effect.getDuration() / 20;
+         
          String text = name + (lvl > 1 ? " " + lvl : "") + " | " + sec / 60 + ":" + String.format("%02d", sec % 60);
+         float width = mc.textRenderer.getWidth(text);
          
-         float width = font.width(text);
-         
-         MsdfRenderer.renderText(
-            font.getFont(),
+         mc.textRenderer.draw(
             text,
-            font.getSize(),
-            0xFFFFFF,
-            ms.peek().getPositionMatrix(),
             -width / 2,
             offsetY,
-            0.01F
+            0xFFFFFF,
+            false,
+            ms.peek().getPositionMatrix(),
+            mc.getBufferBuilders().getEntityVertexConsumers(),
+            TextRenderer.TextLayerType.NORMAL,
+            0,
+            0xF000F0
          );
+         
          offsetY += 9;
       }
       
+      // Завершаем рендер эффектов
+      mc.getBufferBuilders().getEntityVertexConsumers().draw();
+      
       ms.pop();
    }
-
-   /**
-    * Рендер предметов игрока
-    */
-   private void renderPlayerItems(MatrixStack ms, PlayerEntity player, Font font) {
-      List<ItemStack> stacks = new ArrayList<>(6);
-      stacks.add(player.getMainHandStack());
-      player.getArmorItems().forEach(stacks::add);
-      stacks.add(player.getOffHandStack());
-      stacks.removeIf(i -> i.isEmpty() || i.getItem() instanceof AirBlockItem);
-      
-      if (stacks.isEmpty()) return;
-      
-      float itemSize = 16f;
-      float spacing = 2f;
-      float totalWidth = stacks.size() * itemSize + (stacks.size() - 1) * spacing;
-      float startX = -totalWidth / 2;
-      
-      float currentX = startX;
-      
-      for (ItemStack stack : stacks) {
-         // Рисуем предмет (упрощенно - просто слот)
-         DrawUtility.drawRoundedRect(
-            ms,
-            currentX,
-            -itemSize / 2,
-            itemSize,
-            itemSize,
-            BorderRadius.all(2.0F),
-            new ColorRGBA(60, 60, 60, 220)
-         );
-         
-         // Рисуем чары
-         if (showEnchants.isEnabled() && !stack.getEnchantments().isEmpty()) {
-            List<Object2IntMap.Entry<RegistryEntry<Enchantment>>> enchantments = new ArrayList<>(stack.getEnchantments().getEnchantmentEntries());
-            
-            enchantments.removeIf(entry -> {
-               Text name = Enchantment.getName(entry.getKey(), entry.getIntValue());
-               String full = name.getString();
-               return IMPORTANT_ENCHANTS.stream().noneMatch(full::contains);
-            });
-            
-            if (!enchantments.isEmpty()) {
-               ms.push();
-               ms.translate(currentX, -itemSize / 2 - 2, 0);
-               ms.scale(0.7f, 0.7f, 1.0f);
-               
-               int enchantY = 0;
-               for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : enchantments) {
-                  RegistryEntry<Enchantment> regEntry = entry.getKey();
-                  int level = entry.getIntValue();
-                  Text enchantText = Enchantment.getName(regEntry, level);
-                  
-                  String display = getShortName(enchantText, level);
-                  
-                  MsdfRenderer.renderText(
-                     font.getFont(),
-                     display,
-                     font.getSize() * 0.7f,
-                     0xFFFFFF,
-                     ms.peek().getPositionMatrix(),
-                     0,
-                     enchantY - enchantments.size() * 8,
-                     0.01F
-                  );
-                  enchantY += 8;
-               }
-               
-               ms.pop();
-            }
-         }
-         
-         currentX += itemSize + spacing;
-      }
-   }
-
+   
    /**
     * Автоматическое сокращение чар
     */
@@ -509,11 +385,11 @@ public class PlayerLabels extends BaseModule {
       
       return shortName + " " + level;
    }
-
+   
    @Override
    public void onEnable() {
    }
-
+   
    @Override
    public void onDisable() {
    }

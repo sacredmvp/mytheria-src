@@ -73,6 +73,7 @@
     "minecraft.network.ClientConnectionMixin",
     "minecraft.text.TextVisitFactoryMixin",
     "minecraft.world.AbstractBlockStateMixin",
+    "minecraft.world.BlockMixin",
     "minecraft.world.BlockCollisionSpliteratorMixin",
     "minecraft.world.MixinLightmapTextureManager",
     "minecraft.world.WorldMixin",

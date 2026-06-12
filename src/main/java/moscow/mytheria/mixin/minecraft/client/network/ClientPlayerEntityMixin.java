@@ -80,6 +80,8 @@ public class ClientPlayerEntityMixin implements ClientPlayerEntityAddition, IMin
       Mytheria.getInstance().getEventManager().triggerEvent(new ClientPlayerTickEndEvent());
    }
 
+
+
    @Inject(
       method = {"tickMovement()V"},
       at = {@At("HEAD")}

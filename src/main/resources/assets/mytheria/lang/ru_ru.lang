@@ -608,6 +608,119 @@ modules.settings.zoom.level=Уровень зума
 modules.settings.zoom.smooth=Плавный зум
 modules.settings.zoom.smooth_speed=Скорость плавности
 
+# ObjectInfo
+modules.descriptions.objectinfo=Отображает информацию об объектах
+modules.settings.objectinfo.show_players=Показывать игроков
+modules.settings.objectinfo.show_mobs=Показывать мобов
+modules.settings.objectinfo.show_animals=Показывать животных
+modules.settings.objectinfo.ignore_naked=Игнорировать без брони
+modules.settings.objectinfo.distance_color=Цвет по дистанции
+modules.settings.objectinfo.color=Цвет линий
+modules.settings.objectinfo.line_width=Толщина линий
+modules.settings.objectinfo.start_point=Начало линий
+modules.settings.objectinfo.start_point.eyes=От глаз
+modules.settings.objectinfo.start_point.crosshair=От прицела
+modules.settings.objectinfo.start_point.top=От верха головы
+
+# CameraView
+modules.descriptions.cameraview=Свободная камера с полным контролем
+modules.settings.cameraview.speed_xz=Скорость X/Z
+modules.settings.cameraview.speed_y=Скорость Y
+modules.settings.cameraview.fast_fly=Ускорение Ctrl
+modules.settings.cameraview.fast_multiplier=Множитель ускорения
+modules.settings.cameraview.block_movement=Блокировать движения
+
+# BlockInfo
+modules.descriptions.blockinfo=Подсвечивает важные блоки в мире
+modules.settings.blockinfo.blocks=Блоки
+modules.settings.blockinfo.chest=Сундуки
+modules.settings.blockinfo.ender_chest=Эндер-сундуки
+modules.settings.blockinfo.barrel=Бочки
+modules.settings.blockinfo.shulker_box=Шалкеры
+modules.settings.blockinfo.hopper=Воронки
+modules.settings.blockinfo.furnace=Печи
+modules.settings.blockinfo.dispenser=Раздатчики
+modules.settings.blockinfo.dropper=Выбрасыватели
+modules.settings.blockinfo.spawner=Спавнеры
+modules.settings.blockinfo.jigsaw=Блок-пазл
+modules.settings.blockinfo.structure_block=Структурный блок
+modules.settings.blockinfo.minecarts=Вагонетки с сундуками
+modules.settings.blockinfo.through_walls=Через стены
+modules.settings.blockinfo.radius=Радиус
+modules.settings.blockinfo.line_width=Толщина линий
+modules.settings.blockinfo.show_nametags=Показывать неймтеги
+modules.settings.blockinfo.nametag_scale=Размер неймтегов
+
+# Arrows
+modules.descriptions.arrows=Показывает стрелки и линии к целям
+modules.settings.arrows.lines=Линии вместо стрелок
+modules.settings.arrows.show_distance=Показывать дистанцию
+modules.settings.arrows.targets=Цели
+modules.settings.arrows.targets.description=Выберите типы целей для отображения
+modules.settings.arrows.targets.players=Игроки
+modules.settings.arrows.targets.animals=Животные
+modules.settings.arrows.targets.mobs=Мобы
+modules.settings.arrows.targets.villagers=Жители
+modules.settings.arrows.targets.invisibles=Невидимые
+modules.settings.arrows.targets.naked_players=Голые игроки
+modules.settings.arrows.targets.friends=Друзья
+
+# AutoChat
+modules.descriptions.autochat=Автоматически отправляет сообщения в чат с заданной задержкой
+modules.settings.autochat.delay=Задержка (сек)
+modules.settings.autochat.delay.description=Задержка между отправкой сообщений в секундах
+modules.settings.autochat.random_order=Случайный порядок
+modules.settings.autochat.only_when_active=Только при активной игре
+modules.settings.autochat.test=Отправить сейчас
+modules.settings.autochat.message1=Сообщение 1
+modules.settings.autochat.enabled1=Включить сообщение 1
+modules.settings.autochat.message2=Сообщение 2
+modules.settings.autochat.enabled2=Включить сообщение 2
+modules.settings.autochat.message3=Сообщение 3
+modules.settings.autochat.enabled3=Включить сообщение 3
+modules.settings.autochat.message4=Сообщение 4
+modules.settings.autochat.enabled4=Включить сообщение 4
+modules.settings.autochat.message5=Сообщение 5
+modules.settings.autochat.enabled5=Включить сообщение 5
+modules.settings.autochat.message6=Сообщение 6
+modules.settings.autochat.enabled6=Включить сообщение 6
+modules.settings.autochat.message7=Сообщение 7
+modules.settings.autochat.enabled7=Включить сообщение 7
+modules.settings.autochat.message8=Сообщение 8
+modules.settings.autochat.enabled8=Включить сообщение 8
+modules.settings.autochat.message9=Сообщение 9
+modules.settings.autochat.enabled9=Включить сообщение 9
+modules.settings.autochat.message10=Сообщение 10
+modules.settings.autochat.enabled10=Включить сообщение 10
+
+# XRay
+modules.settings.xray.blocks=Блоки
+modules.settings.xray.diamond_ore=Алмазная руда
+modules.settings.xray.emerald_ore=Изумрудная руда
+modules.settings.xray.iron_ore=Железная руда
+modules.settings.xray.gold_ore=Золотая руда
+modules.settings.xray.ancient_debris=Древние обломки
+modules.settings.xray.lapis_ore=Лазуритовая руда
+modules.settings.xray.redstone_ore=Красная руда
+modules.settings.xray.coal_ore=Угольная руда
+modules.settings.xray.copper_ore=Медная руда
+modules.settings.xray.nether_quartz_ore=Кварцевая руда
+modules.settings.xray.nether_gold_ore=Адская золотая руда
+modules.settings.xray.chest=Сундуки
+modules.settings.xray.ender_chest=Эндер-сундуки
+modules.settings.xray.shulker_box=Шалкеры
+modules.settings.xray.barrel=Бочки
+modules.settings.xray.dispenser=Раздатчики
+modules.settings.xray.dropper=Выбрасыватели
+modules.settings.xray.piston=Поршни
+modules.settings.xray.sticky_piston=Липкие поршни
+modules.settings.xray.observer=Наблюдатели
+modules.settings.xray.hopper=Воронки
+modules.settings.xray.spawner=Спавнеры
+modules.settings.xray.structure_block=Структурный блок
+modules.settings.xray.jigsaw=Блок-пазл
+modules.settings.blockinfo.max_blocks=Макс. блоков
+
 # Chinahat
 modules.descriptions.chinahat=Китайская шляпка над головой
 modules.settings.chinahat.height_offset=Смещение по высоте

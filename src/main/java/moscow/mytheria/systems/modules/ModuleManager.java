@@ -16,8 +16,10 @@ import moscow.mytheria.systems.modules.modules.combat.ShiftTap;
 import moscow.mytheria.systems.modules.modules.combat.TotemTracker;
 import moscow.mytheria.systems.modules.modules.combat.DebugHelper;
 import moscow.mytheria.systems.modules.modules.movement.AutoSprint;
+import moscow.mytheria.systems.modules.modules.movement.CameraView;
 import moscow.mytheria.systems.modules.modules.other.Assist;
 import moscow.mytheria.systems.modules.modules.other.AutoAccept;
+import moscow.mytheria.systems.modules.modules.other.AutoChat;
 import moscow.mytheria.systems.modules.modules.other.AutoJoin;
 import moscow.mytheria.systems.modules.modules.other.CoordInvite;
 import moscow.mytheria.systems.modules.modules.other.DeathCords;
@@ -47,7 +49,6 @@ import moscow.mytheria.systems.modules.modules.visuals.Interface;
 import moscow.mytheria.systems.modules.modules.visuals.ItemPhysics;
 import moscow.mytheria.systems.modules.modules.visuals.KillEffects;
 import moscow.mytheria.systems.modules.modules.visuals.MenuModule;
-import moscow.mytheria.systems.modules.modules.visuals.ObjectInfo;
 import moscow.mytheria.systems.modules.modules.visuals.PVPAI;
 import moscow.mytheria.systems.modules.modules.visuals.Prediction;
 import moscow.mytheria.systems.modules.modules.visuals.Removals;
@@ -118,6 +119,22 @@ public class ModuleManager {
       this.register(panicModule);
       panicModule.setHidden(true); // Скрыт по умолчанию
       
+      BaseModule cameraViewModule = new moscow.mytheria.systems.modules.modules.movement.CameraView();
+      this.register(cameraViewModule);
+      cameraViewModule.setHidden(true); // Скрыт по умолчанию
+      
+      BaseModule blockInfoModule = new moscow.mytheria.systems.modules.modules.visuals.BlockInfo();
+      this.register(blockInfoModule);
+      blockInfoModule.setHidden(true); // Скрыт по умолчанию
+
+      BaseModule xrayModule = new moscow.mytheria.systems.modules.modules.visuals.OreScanner();
+      this.register(xrayModule);
+      xrayModule.setHidden(true); // Скрыт по умолчанию
+      
+      BaseModule arrowsModule = new moscow.mytheria.systems.modules.modules.visuals.Arrows();
+      this.register(arrowsModule);
+      arrowsModule.setHidden(true); // Скрыт по умолчанию
+      
       // Остальные модули
       this.register(new TotemTracker());
       this.register(new AutoSprint());
@@ -148,7 +165,6 @@ public class ModuleManager {
       this.register(new PlayerUtils());
       this.register(new ItemPickup());
       this.register(new ItemHighlighter());
-      this.register(new ObjectInfo());
       this.register(new NameProtect());
       this.register(new ElytraUtils());
       this.register(new Freelook());
@@ -161,6 +177,7 @@ public class ModuleManager {
       this.register(new Sounds());
       this.register(new CoordInvite());
       this.register(new SpecBind());
+      this.register(new AutoChat());
       this.register(new BlockOverlay());
       this.register(new HitParticles());
       this.register(new ItemPhysics());

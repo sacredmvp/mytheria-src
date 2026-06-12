@@ -22,6 +22,8 @@ public class SafeMode extends BaseModule {
    private boolean nameTagsWasEnabled = false;
    private boolean triggerBotWasEnabled = false;
    private boolean aimAssistWasEnabled = false;
+   private boolean cameraViewWasEnabled = false;
+   private boolean blockInfoWasEnabled = false;
    private boolean panicActivated = false;
    private static boolean modulesUnlocked = false;
 
@@ -99,6 +101,34 @@ public class SafeMode extends BaseModule {
          }
       }
       
+      // Сохраняем и выключаем CameraView
+      Module cameraViewModule = moduleManager.getModule("CameraView");
+      if (cameraViewModule != null) {
+         cameraViewWasEnabled = cameraViewModule.isEnabled();
+         if (cameraViewWasEnabled) {
+            cameraViewModule.toggle();
+         }
+         
+         // Скрываем CameraView
+         if (cameraViewModule instanceof BaseModule baseCameraView) {
+            baseCameraView.setHidden(true);
+         }
+      }
+      
+      // Сохраняем и выключаем BlockInfo
+      Module blockInfoModule = moduleManager.getModule("BlockInfo");
+      if (blockInfoModule != null) {
+         blockInfoWasEnabled = blockInfoModule.isEnabled();
+         if (blockInfoWasEnabled) {
+            blockInfoModule.toggle();
+         }
+         
+         // Скрываем BlockInfo
+         if (blockInfoModule instanceof BaseModule baseBlockInfo) {
+            baseBlockInfo.setHidden(true);
+         }
+      }
+      
       panicActivated = true;
       modulesUnlocked = false;
       
@@ -171,6 +201,28 @@ public class SafeMode extends BaseModule {
          }
       }
       
+      // Восстанавливаем CameraView
+      Module cameraViewModule = moduleManager.getModule("CameraView");
+      if (cameraViewModule != null) {
+         if (cameraViewModule instanceof BaseModule baseCameraView) {
+            baseCameraView.setHidden(false);
+         }
+         if (cameraViewWasEnabled && !cameraViewModule.isEnabled()) {
+            cameraViewModule.toggle();
+         }
+      }
+      
+      // Восстанавливаем BlockInfo
+      Module blockInfoModule = moduleManager.getModule("BlockInfo");
+      if (blockInfoModule != null) {
+         if (blockInfoModule instanceof BaseModule baseBlockInfo) {
+            baseBlockInfo.setHidden(false);
+         }
+         if (blockInfoWasEnabled && !blockInfoModule.isEnabled()) {
+            blockInfoModule.toggle();
+         }
+      }
+      
       // Показываем Panic
       this.setHidden(false);
       
@@ -229,9 +281,32 @@ public class SafeMode extends BaseModule {
          baseAimAssist.setHidden(false);
       }
       
+      Module cameraViewModule = moduleManager.getModule("CameraView");
+      if (cameraViewModule instanceof BaseModule baseCameraView) {
+         baseCameraView.setHidden(false);
+      }
+      
+      Module blockInfoModule = moduleManager.getModule("BlockInfo");
+      if (blockInfoModule instanceof BaseModule baseBlockInfo) {
+         baseBlockInfo.setHidden(false);
+      }
+      
+      Module arrowsModule = moduleManager.getModule("Arrows");
+      if (arrowsModule instanceof BaseModule baseArrows) {
+         baseArrows.setHidden(false);
+      }
+      
       Module panicModule = moduleManager.getModule("Panic");
       if (panicModule instanceof BaseModule basePanic) {
          basePanic.setHidden(false);
+      }
+
+      try {
+         Module xrayModule = moduleManager.getModule("XRay");
+         if (xrayModule instanceof BaseModule baseXray) {
+            baseXray.setHidden(false);
+         }
+      } catch (Exception ignored) {
       }
    }
 }

@@ -438,6 +438,74 @@ modules.settings.zoom.level=Zoom level
 modules.settings.zoom.smooth=Smooth zoom
 modules.settings.zoom.smooth_speed=Smooth speed
 
+# ObjectInfo
+modules.descriptions.objectinfo=Displays object information
+modules.settings.objectinfo.show_players=Show players
+modules.settings.objectinfo.show_mobs=Show mobs
+modules.settings.objectinfo.show_animals=Show animals
+modules.settings.objectinfo.ignore_naked=Ignore naked
+modules.settings.objectinfo.distance_color=Distance color
+modules.settings.objectinfo.color=Line color
+modules.settings.objectinfo.line_width=Line width
+modules.settings.objectinfo.start_point=Line start point
+modules.settings.objectinfo.start_point.eyes=From eyes
+modules.settings.objectinfo.start_point.crosshair=From crosshair
+modules.settings.objectinfo.start_point.top=From top of head
+
+# CameraView
+modules.descriptions.cameraview=Free camera with full control
+modules.settings.cameraview.speed_xz=Speed X/Z
+modules.settings.cameraview.speed_y=Speed Y
+modules.settings.cameraview.fast_fly=Fast fly Ctrl
+modules.settings.cameraview.fast_multiplier=Fast multiplier
+modules.settings.cameraview.block_movement=Block movement
+
+# BlockInfo
+modules.descriptions.blockinfo=Highlights important blocks in the world
+modules.settings.blockinfo.blocks=Blocks
+modules.settings.blockinfo.chest=Chests
+modules.settings.blockinfo.ender_chest=Ender Chests
+modules.settings.blockinfo.barrel=Barrels
+modules.settings.blockinfo.shulker_box=Shulker Boxes
+modules.settings.blockinfo.hopper=Hoppers
+modules.settings.blockinfo.furnace=Furnaces
+modules.settings.blockinfo.dispenser=Dispensers
+modules.settings.blockinfo.dropper=Droppers
+modules.settings.blockinfo.spawner=Spawners
+modules.settings.blockinfo.jigsaw=Jigsaw Block
+modules.settings.blockinfo.structure_block=Structure Block
+modules.settings.blockinfo.minecarts=Chest Minecarts
+modules.settings.blockinfo.through_walls=Through Walls
+modules.settings.blockinfo.radius=Radius
+modules.settings.blockinfo.line_width=Line Width
+
+# XRay
+modules.settings.xray.blocks=Blocks
+modules.settings.xray.diamond_ore=Diamond Ore
+modules.settings.xray.emerald_ore=Emerald Ore
+modules.settings.xray.iron_ore=Iron Ore
+modules.settings.xray.gold_ore=Gold Ore
+modules.settings.xray.ancient_debris=Ancient Debris
+modules.settings.xray.lapis_ore=Lapis Ore
+modules.settings.xray.redstone_ore=Redstone Ore
+modules.settings.xray.coal_ore=Coal Ore
+modules.settings.xray.copper_ore=Copper Ore
+modules.settings.xray.nether_quartz_ore=Nether Quartz Ore
+modules.settings.xray.nether_gold_ore=Nether Gold Ore
+modules.settings.xray.chest=Chests
+modules.settings.xray.ender_chest=Ender Chests
+modules.settings.xray.shulker_box=Shulker Boxes
+modules.settings.xray.barrel=Barrels
+modules.settings.xray.dispenser=Dispensers
+modules.settings.xray.dropper=Droppers
+modules.settings.xray.piston=Pistons
+modules.settings.xray.sticky_piston=Sticky Pistons
+modules.settings.xray.observer=Observers
+modules.settings.xray.hopper=Hoppers
+modules.settings.xray.spawner=Spawners
+modules.settings.xray.structure_block=Structure Block
+modules.settings.xray.jigsaw=Jigsaw Block
+
 # Chinahat
 modules.descriptions.chinahat=Chinese hat above the head
 modules.settings.chinahat.height_offset=Height offset
